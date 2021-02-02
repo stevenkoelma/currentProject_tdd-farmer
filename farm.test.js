@@ -1,4 +1,4 @@
-const { getCostsForCrop, getRevenueForCrop } = require("./farm");
+const { getCostsForCrop, getRevenueForCrop, getProfitForCrop } = require("./farm");
 
 // 1. bereken de kosten voor een crop: getCostsForCrop
 
@@ -13,7 +13,7 @@ describe("getCostsForCrop", () => {
 
 // 2. bereken inkomsten voor een crop (zonder omgevingsfactoren): getRevenueForCrop
 
-describe.only("getRevenueForCrop", () => {
+describe("getRevenueForCrop", () => {
   const pumpkin = {
     name: "pumpkin",
     salePrice: 6,
@@ -28,3 +28,21 @@ describe.only("getRevenueForCrop", () => {
     expect(getRevenueForCrop(input)).toBe(36);
   });
 });
+
+//3. Bereken de winst voor een crop (zonder omgevingsfactoren): getProfitForCrop
+
+describe("getProfitForCrop", () => {
+    const carrot = {
+        name: "carrot",
+        salePrice: 10,
+        
+    }
+const input = {
+    crop: carrot,
+    numCrops: 50,
+    yield: 6
+}
+test("Get profit for crop", () => {
+    expect(getProfitForCrop(input)).toBe(10)
+})
+})
