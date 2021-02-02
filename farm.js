@@ -4,9 +4,9 @@ const getCostsForCrop = (input) => {
   return totalCosts;
 };
 
-
+const getRevenueForCrop = (input) => input.yield * input.crop.salePrice;
 
 module.exports = {
   getCostsForCrop,
-  getYieldForPlant,
+  getRevenueForCrop,
 };
