@@ -3,6 +3,7 @@ const {
   getRevenueForCrop,
   getProfitForCrop,
   getTotalProfit,
+  getYieldForPlant,
 } = require("./farm");
 
 // 1. bereken de kosten voor een crop: getCostsForCrop
@@ -52,7 +53,7 @@ describe("getProfitForCrop", () => {
 });
 
 // 4. Bereken de winst voor een crop (zonder omgevingsfactoren): getProfitForCrop
-describe.only("getTotalProfit", () => {
+describe("getTotalProfit", () => {
   const carrot = {
     name: "carrot",
     salePrice: 13,
@@ -69,12 +70,24 @@ describe.only("getTotalProfit", () => {
   };
 
   const input = [
-    {crop: carrot, numCrops: 8,  yield: 11},
-    {crop: pumpkin, numCrops: 4,  yield: 8},
-    {crop: corn, numCrops: 14,  yield: 13}
+    { crop: carrot, numCrops: 8, yield: 11 },
+    { crop: pumpkin, numCrops: 4, yield: 8 },
+    { crop: corn, numCrops: 14, yield: 13 },
   ];
   test("Get total profit for carrot, pumpkin and corn", () => {
     expect(getTotalProfit(input)).toBe(305);
   });
+});
 
+//5. Neem omgevingsfactoren mee in het berekenen van de opbrengst (in kilo's) van een plant: getYieldForPlant
+
+describe.only("getYieldForPlant", () => {
+  const corn = {
+    name: "corn",
+    yield: 30,
+  };
+
+  test("Get yield for plant with no environment factors", () => {
+    expect(getYieldForPlant(corn)).toBe(30);
+  });
 });

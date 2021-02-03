@@ -16,9 +16,16 @@ const getTotalProfit = (input) => {
   );
 };
 
+const getYieldForPlant = (crop, environmentFactors) => {
+  if (!environmentFactors) {
+    return crop.yield;
+  }
+};
+
 module.exports = {
   getCostsForCrop,
   getRevenueForCrop,
   getProfitForCrop,
   getTotalProfit,
+  getYieldForPlant,
 };
