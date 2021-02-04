@@ -81,13 +81,42 @@ describe("getTotalProfit", () => {
 
 //5. Neem omgevingsfactoren mee in het berekenen van de opbrengst (in kilo's) van een plant: getYieldForPlant
 
-describe.only("getYieldForPlant", () => {
+describe("getYieldForPlant", () => {
   const corn = {
     name: "corn",
     yield: 30,
+    factors: {
+      sun: {
+        low: -50,
+        medium: 0,
+        high: 50,
+      },
+      wind: {
+        low: 0,
+        medium: -30,
+        high: -60,
+      },
+    },
+  };
+
+  const oneEnvironmentFactor = {
+    wind: "high",
+  };
+
+  const multipleEnvironmentFactors = {
+    sun: "low",
+    wind: "medium",
   };
 
   test("Get yield for plant with no environment factors", () => {
     expect(getYieldForPlant(corn)).toBe(30);
+  });
+
+  test("Get yield for plant with factor wind high", () => {
+    expect(getYieldForPlant(corn, oneEnvironmentFactor)).toBe(12);
+  });
+
+  test("Get yield for plant with factor sun low and wind medium", () => {
+    expect(getYieldForPlant(corn, multipleEnvironmentFactors)).toBe(10.5);
   });
 });

@@ -20,6 +20,32 @@ const getYieldForPlant = (crop, environmentFactors) => {
   if (!environmentFactors) {
     return crop.yield;
   }
+
+  let sun = 1;
+  let wind = 1;
+
+  switch (environmentFactors.sun) {
+    case "low":
+      sun = (100 + crop.factors.sun.low) / 100;
+      break;
+    case "medium":
+      sun = (100 + crop.factors.sun.medium) / 100;
+      break;
+    case "high":
+      sun = (100 + crop.factors.sun.high) / 100;
+  }
+  switch (environmentFactors.wind) {
+    case "low":
+      wind = (100 + crop.factors.wind.low) / 100;
+      break;
+    case "medium":
+      wind = (100 + crop.factors.wind.medium) / 100;
+      break;
+    case "high":
+      wind = (100 + crop.factors.wind.high) / 100;
+  }
+  const result = crop.yield * sun * wind;
+  return parseFloat(result.toFixed(1))
 };
 
 module.exports = {
