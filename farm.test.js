@@ -4,6 +4,7 @@ const {
   getProfitForCrop,
   getTotalProfit,
   getYieldForPlant,
+  getYieldForCrop,
 } = require("./farm");
 
 // 1. bereken de kosten voor een crop: getCostsForCrop
@@ -82,41 +83,77 @@ describe("getTotalProfit", () => {
 //5. Neem omgevingsfactoren mee in het berekenen van de opbrengst (in kilo's) van een plant: getYieldForPlant
 
 describe("getYieldForPlant", () => {
-  const corn = {
-    name: "corn",
-    yield: 30,
-    factors: {
-      sun: {
-        low: -50,
-        medium: 0,
-        high: 50,
-      },
-      wind: {
-        low: 0,
-        medium: -30,
-        high: -60,
-      },
-    },
-  };
-
-  const oneEnvironmentFactor = {
-    wind: "high",
-  };
-
-  const multipleEnvironmentFactors = {
-    sun: "low",
-    wind: "medium",
-  };
-
   test("Get yield for plant with no environment factors", () => {
+    const corn = {
+      name: "corn",
+      yield: 30,
+    };
     expect(getYieldForPlant(corn)).toBe(30);
   });
 
   test("Get yield for plant with factor wind high", () => {
-    expect(getYieldForPlant(corn, oneEnvironmentFactor)).toBe(12);
+    const corn = {
+      name: "corn",
+      yield: 30,
+      factors: {
+        sun: {
+          low: -50,
+          medium: 0,
+          high: 50,
+        },
+        wind: {
+          low: 0,
+          medium: -30,
+          high: -60,
+        },
+      },
+    };
+
+    const environmentFactors = {
+      wind: "high",
+    };
+    expect(getYieldForPlant(corn, environmentFactors)).toBe(12);
   });
 
   test("Get yield for plant with factor sun low and wind medium", () => {
-    expect(getYieldForPlant(corn, multipleEnvironmentFactors)).toBe(10.5);
+    const corn = {
+      name: "corn",
+      yield: 30,
+      factors: {
+        sun: {
+          low: -50,
+          medium: 0,
+          high: 50,
+        },
+        wind: {
+          low: 0,
+          medium: -30,
+          high: -60,
+        },
+      },
+    };
+
+    const environmentFactors = {
+      sun: "low",
+      wind: "medium"
+    };
+
+    expect(getYieldForPlant(corn, environmentFactors)).toBe(10.5);
+  });
+});
+
+// 6. Bereken de opbrengst in kilo's van een crop getYieldForCrop, neem omgevingsfactoren mee in je berekening
+
+describe("getYieldForCrop", () => {
+  test("Get yield for crop, simple", () => {
+    const corn = {
+      name: "corn",
+      yield: 3,
+    };
+    const input = {
+      crop: corn,
+      numCrops: 10,
+    };
+    expect(getYieldForCrop(input)).toBe(30);
   });
 });

@@ -48,10 +48,15 @@ const getYieldForPlant = (crop, environmentFactors) => {
   return parseFloat(result.toFixed(1))
 };
 
+const getYieldForCrop = () => {
+
+}
+
 module.exports = {
   getCostsForCrop,
   getRevenueForCrop,
   getProfitForCrop,
   getTotalProfit,
   getYieldForPlant,
+  getYieldForCrop, 
 };
