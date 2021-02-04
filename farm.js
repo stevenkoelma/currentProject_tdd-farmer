@@ -20,7 +20,6 @@ const getYieldForPlant = (crop, environmentFactors) => {
   if (!environmentFactors) {
     return crop.yield;
   }
-
   let sun = 1;
   let wind = 1;
 
@@ -45,12 +44,11 @@ const getYieldForPlant = (crop, environmentFactors) => {
       wind = (100 + crop.factors.wind.high) / 100;
   }
   const result = crop.yield * sun * wind;
-  return parseFloat(result.toFixed(1))
+  return parseFloat(result.toFixed(1));
 };
 
-const getYieldForCrop = () => {
-
-}
+const getYieldForCrop = (input, environmentFactors) =>
+  getYieldForPlant(input.crop, environmentFactors) * input.numCrops;
 
 module.exports = {
   getCostsForCrop,
@@ -58,5 +56,5 @@ module.exports = {
   getProfitForCrop,
   getTotalProfit,
   getYieldForPlant,
-  getYieldForCrop, 
+  getYieldForCrop,
 };
