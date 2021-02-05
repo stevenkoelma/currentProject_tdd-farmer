@@ -4,17 +4,7 @@ const getCostsForCrop = (input) => {
   return totalCosts;
 };
 
-const getRevenueForCrop = (input) => input.yield * input.crop.salePrice;
-
-const getProfitForCrop = (input) =>
-  getRevenueForCrop(input) - getCostsForCrop(input);
-
-const getTotalProfit = (input) => {
-  const arrayWithAllCrops = input.map((crop) => getProfitForCrop(crop));
-  return arrayWithAllCrops.reduce(
-    (accumulator, currentValue) => accumulator + currentValue
-  );
-};
+const getRevenueForCrop = (input) => input.crop.yield * input.crop.salePrice;
 
 const getYieldForPlant = (crop, environmentFactors) => {
   if (!environmentFactors) {
@@ -43,18 +33,32 @@ const getYieldForPlant = (crop, environmentFactors) => {
     case "high":
       wind = (100 + crop.factors.wind.high) / 100;
   }
-  const result = crop.yield * sun * wind;
-  return parseFloat(result.toFixed(1));
+  return crop.yield * sun * wind;
 };
 
 const getYieldForCrop = (input, environmentFactors) =>
   getYieldForPlant(input.crop, environmentFactors) * input.numCrops;
 
+const getProfitForCrop = (input, factor) => {
+  const result =
+    getYieldForCrop(input, factor) * input.crop.salePrice -
+    getCostsForCrop(input);
+  return parseFloat(result.toFixed(1));
+};
+
+const getTotalProfit = (input, factor) => {
+  const profitPerCrop = input.map((crop) => getProfitForCrop(crop, factor));
+  const totalProfit = profitPerCrop.reduce(
+    (accumulator, currentValue) => accumulator + currentValue
+  );
+  return parseFloat(totalProfit.toFixed(1));
+};
+
 module.exports = {
   getCostsForCrop,
   getRevenueForCrop,
-  getProfitForCrop,
-  getTotalProfit,
   getYieldForPlant,
   getYieldForCrop,
+  getProfitForCrop,
+  getTotalProfit,
 };
